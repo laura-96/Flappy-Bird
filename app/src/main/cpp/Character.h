@@ -24,7 +24,7 @@ public:
     float radius;
     float x, y;
     float velocity;
-    float gravity = -0.15f;
+    float gravity = -110.0f;
 
     Collider* collider;
     Circle* circle;

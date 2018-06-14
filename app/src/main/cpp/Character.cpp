@@ -29,22 +29,23 @@ Character::~Character() {
 
 void Character::ApplyForce()
 {
-    velocity = 0.1f;
+    velocity = 100.0f;
 }
 
 void Character::Update(float dt)
 {
 //TODO BALANCE
-    y = y + velocity * dt + (0.5f * gravity * dt * dt);
+    float to_move = velocity * dt + (0.5f * gravity * dt * dt);
+    y += to_move;
     velocity += (gravity * dt);
 
     //velocity = fmax(-0.005f, velocity);
 
-    MoveCharacter(0, y);
+    MoveCharacter(0, to_move);
 }
 
 void Character::MoveCharacter(float move_x, float move_y) {
 
-    circle->Move(0, y);
-    collider->Move(0, y);
+    circle->Move(0, move_y);
+    collider->Move(0, move_y);
 }

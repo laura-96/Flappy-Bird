@@ -29,7 +29,7 @@ bool ModuleMainScene::Init() {
 
     InstantiateTubes(screen_x);
 
-    float char_size = screen_x / 4; //A quarter of the screen in x axis
+    float char_size = screen_x / 9;
 
     //Instantiate in the middle of the screen
     float screen_pos_x = screen_x / 2;
@@ -101,7 +101,7 @@ bool ModuleMainScene::Update() {
     }
 
     if(tubes.back()->pos_x <= (screen_x + tubes.back()->width))
-        InstantiateTubes(tubes.back()->pos_x + (screen_x / 4));
+        InstantiateTubes(tubes.back()->pos_x + (screen_x / 3));
 
     return true;
 
@@ -114,16 +114,16 @@ void ModuleMainScene::OnCollision(Collider *c1, Collider *c2) {
 void ModuleMainScene::InstantiateTubes(float pos_x)
 {
 
-    for (float sx = pos_x ; sx < (pos_x + screen_x); sx += (screen_x / 4))// distance between tubes
+    for (float sx = pos_x ; sx < (pos_x + screen_x); sx += (screen_x / 3))// distance between tubes
     {
 
         std::random_device rnd;
 
-        std::uniform_real_distribution<float> dist(0.0f, (float)screen_y);
+        std::uniform_real_distribution<float> dist(0.0f, (float) (screen_y / 2));
         float rand_h = dist(rnd);
         float distance = screen_y / 2;
 
-        Tube* tube = new Tube(distance, sx, 0, screen_x / 8, rand_h, screen_y - (rand_h + distance));
+        Tube* tube = new Tube(distance, sx, 0, screen_x / 4, rand_h, screen_y - (rand_h + distance));
 
         App->module_renderer->AddQuad(tube->up_quad);
         App->module_renderer->AddQuad(tube->down_quad);
@@ -160,7 +160,7 @@ void ModuleMainScene::RestartGame() {
 
     InstantiateTubes(screen_x);
 
-    float char_size = screen_x / 4; //A quarter of the screen in x axis
+    float char_size = screen_x / 9; //A quarter of the screen in x axis
 
     //Instantiate in the middle of the screen
     float screen_pos_x = screen_x / 2;
