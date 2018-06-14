@@ -11,7 +11,7 @@ class Collider;
 class Tube{
 public:
 
-    Tube(float d, float x, float y, float w, float h);
+    Tube(float d, float x, float y, float w, float h_down, float h_up);
     ~Tube();
 
     void Update(float dt);
@@ -27,7 +27,9 @@ public:
     }
 
     float dist;
-    float pos_x, pos_y;
+    float pos_x;
+    float width;
+
     Collider* up_collider;
     Collider* down_collider;
 

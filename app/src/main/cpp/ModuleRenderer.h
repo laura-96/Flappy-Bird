@@ -19,10 +19,12 @@ class Circle;
 static const char vertex[] =
         "#version 100\n"
                 "attribute vec2 pos;\n"
+                "attribute vec2 viewport;\n"
                 "attribute vec4 color;\n"
                 "varying vec4 vColor;\n"
                 "void main() {\n"
-                "    gl_Position = vec4(pos, 0.0, 1.0);\n"
+                "    vec2 final_pos = vec2((pos.x * 2 / viewport.x) - 1, (pos.y * 2 / viewport.y) - 1);"
+                "    gl_Position = vec4(final_pos, 0.0, 1.0);\n"
                 "    vColor = color;\n"
                 "}\n";
 
@@ -62,6 +64,7 @@ private:
     GLuint vertexBuff;
     GLuint circleVBuff;
 
+    GLint vpAttrib;
     GLint posAttrib;
     GLint colorAttrib;
 

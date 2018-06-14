@@ -7,9 +7,8 @@
 #include "Collider.h"
 #include "Shapes.h"
 
-Character::Character(float aspect_r, float rad, float pos_x, float pos_y, Circle* circ)
+Character::Character(float rad, float pos_x, float pos_y, Circle* circ)
 {
-
     radius = rad;
     x = pos_x;
     y = pos_y;
@@ -35,7 +34,7 @@ void Character::ApplyForce()
 
 void Character::Update(float dt)
 {
-
+//TODO BALANCE
     y = y + velocity * dt + (0.5f * gravity * dt * dt);
     velocity += (gravity * dt);
 

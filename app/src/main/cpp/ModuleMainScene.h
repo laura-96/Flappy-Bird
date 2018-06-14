@@ -51,6 +51,8 @@ private:
     GameState game_state;
     float last_frame;
 
+    int screen_x, screen_y;
+
 
 };
 #endif //FLAPPYBIRD_MODULEMAINSCENE_H

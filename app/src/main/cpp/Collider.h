@@ -19,8 +19,6 @@ class Collider
 	float radius;
 	CollisionType type;
 
-	bool toDelete = false;
-
 public:
 
 	Collider();
@@ -28,9 +26,7 @@ public:
 
 	Collider(float pos_x, float pos_y, float r);
 	Collider(float pos_x, float pos_y, float width, float height);
-	void SetToDelete();
 	void Move(float move_x, float move_y);
-	bool GetToDelete() const;
 	bool CheckCollision(Collider* col) const;
 	const CollisionType GetType() const;
 

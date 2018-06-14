@@ -15,9 +15,6 @@
 #include "Character.h"
 
 
-
-#define DISTANCE_TUBES 1.0F
-
 ModuleMainScene::ModuleMainScene(Application *app) : Module(app),
                                                      game_state(BEGIN),
                                                      last_frame(0){}
@@ -28,16 +25,19 @@ ModuleMainScene::~ModuleMainScene()
 
 bool ModuleMainScene::Init() {
 
-    InstantiateTubes(1.0f);
+    App->module_renderer->GetViewportSize(screen_x, screen_y);
 
-    Circle* char_circle = App->module_renderer->CreateCircle(0.1f, 0.0f, 0.0f);
+    InstantiateTubes(screen_x);
 
-    int scr_x, scr_y;
+    float char_size = screen_x / 4; //A quarter of the screen in x axis
 
-    App->module_renderer->GetViewportSize(scr_x, scr_y);
-    float ar = (float)scr_x / (float)scr_y;
+    //Instantiate in the middle of the screen
+    float screen_pos_x = screen_x / 2;
+    float screen_pos_y = screen_y / 2;
 
-    ball = new Character(ar, 0.1f, 0.0f, 0.0f, char_circle);
+    Circle* char_circle = App->module_renderer->CreateCircle(char_size, screen_pos_x, screen_pos_y);
+
+    ball = new Character(char_size, screen_pos_x, screen_pos_y, char_circle);
     App->module_collision->AddCollider(ball->collider);
 
     return true;
@@ -87,7 +87,7 @@ bool ModuleMainScene::Update() {
 
         tubes[i]->Update(dt);
 
-        if((tubes[i]->pos_x + 0.25f) <= (-1.0f))
+        if((tubes[i]->pos_x + tubes[i]->width) <= 0)
         {
             App->module_collision->RemoveCollider(tubes[i]->up_collider);
             App->module_collision->RemoveCollider(tubes[i]->down_collider);
@@ -100,7 +100,7 @@ bool ModuleMainScene::Update() {
 
     }
 
-    if(tubes.back()->pos_x <= 1.25f)
+    if(tubes.back()->pos_x <= (screen_x + tubes.back()->width))
         InstantiateTubes(tubes.back()->pos_x + DISTANCE_TUBES);
 
     return true;
@@ -114,16 +114,16 @@ void ModuleMainScene::OnCollision(Collider *c1, Collider *c2) {
 void ModuleMainScene::InstantiateTubes(float pos_x)
 {
 
-    for (float sx = pos_x ; sx < (pos_x + 2); sx += DISTANCE_TUBES)// distance between tubes
+    for (float sx = pos_x ; sx < (pos_x + screen_x); sx += DISTANCE_TUBES)// distance between tubes
     {
 
         std::random_device rnd;
 
-        std::uniform_real_distribution<float> dist(0.0, 1.0);
-
+        std::uniform_real_distribution<float> dist(0.0f, (float)screen_y);
         float rand_h = dist(rnd);
+        float distance = screen_y / 2;
 
-        Tube* tube = new Tube(0.75f, sx, 0, 0.25f, rand_h);
+        Tube* tube = new Tube(distance, sx, 0, screen_x / 8, rand_h, screen_y - (rand_h + distance));
 
         App->module_renderer->AddQuad(tube->up_quad);
         App->module_renderer->AddQuad(tube->down_quad);
@@ -158,16 +158,17 @@ void ModuleMainScene::RestartGame() {
 
     tubes.clear();
 
-    InstantiateTubes(1.0f);
+    InstantiateTubes(screen_x);
 
-    Circle* char_circle = App->module_renderer->CreateCircle(0.1f, 0.0f, 0.0f);
+    float char_size = screen_x / 4; //A quarter of the screen in x axis
 
-    int scr_x, scr_y;
+    //Instantiate in the middle of the screen
+    float screen_pos_x = screen_x / 2;
+    float screen_pos_y = screen_y / 2;
 
-    App->module_renderer->GetViewportSize(scr_x, scr_y);
-    float ar = (float)scr_x / (float)scr_y;
+    Circle* char_circle = App->module_renderer->CreateCircle(char_size, screen_pos_x, screen_pos_y);
 
-    ball = new Character(ar, 0.1f, 0.0f, 0.0f, char_circle);
+    ball = new Character(char_size, screen_pos_x, screen_pos_y, char_circle);
     App->module_collision->AddCollider(ball->collider);
 
 }

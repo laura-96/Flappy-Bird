@@ -11,7 +11,9 @@
 #include <EGL/egl.h>
 #include <GLES2/gl2.h>
 
+
 struct Vertex {
+public:
     GLfloat pos[2];
     GLubyte rgba[4];
 };
@@ -19,10 +21,9 @@ struct Vertex {
 class Circle {
 
 public:
-    Circle(float aspect, float rad, float x, float y)
+    Circle(float rad, float x, float y)
     {
         radius = rad;
-        ar = aspect;
 
         this->x = x;
         this->y = y;
@@ -31,7 +32,7 @@ public:
 
         for (int i = 0; i < 20; ++i)
         {
-            vertices[i] = {{x + radius * cos(i * delta), ar * (y + radius * sin(i * delta))} , {0x00, 0xFF, 0x00}};
+            vertices[i] = {{x + radius * cos(i * delta), (y + radius * sin(i * delta))} , {0x00, 0xFF, 0x00}};
         }
 
     }
@@ -45,7 +46,7 @@ public:
 
         for (int i = 0; i < 20; ++i)
         {
-            vertices[i] = {{x + move_x + radius * cos(i * delta), ar * (y + move_y + radius * sin(i * delta))} , {0x00, 0xFF, 0x00}};
+            vertices[i] = {{x + move_x + radius * cos(i * delta), (y + move_y + radius * sin(i * delta))} , {0x00, 0xFF, 0x00}};
         }
 
         x = x + move_x;
@@ -55,7 +56,6 @@ public:
 public:
     Vertex vertices[20];
     float radius;
-    float ar;
 private:
     float x, y;
 };
@@ -64,6 +64,7 @@ private:
 class Quad {
 
 public:
+
     Quad(float x, float y, float w, float h)
     {
         width = w;

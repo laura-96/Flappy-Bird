@@ -6,17 +6,17 @@
 #include "Collider.h"
 #include "Shapes.h"
 
-Tube::Tube(float d, float x, float y, float w, float h) {
+Tube::Tube(float d, float x, float y, float w, float h_down, float h_up) {
     dist = d;
 
     pos_x = x;
-    pos_y = y;
+    width = w;
 
-    up_collider = new Collider(x, -1 + y + (h + dist), w, 1 - (-1 + y + (h + dist)));
-    down_collider = new Collider(x, -1 + y, w, h);
+    up_collider = new Collider(x, y + (h_down + dist), w, h_up);
+    down_collider = new Collider(x, y, w, h_down);
 
-    up_quad = new Quad(x, -1 + y + (h + dist), w, 1 - (-1 + y + (h + dist)));
-    down_quad = new Quad(x, -1 + y, w, h);
+    up_quad = new Quad(x, y + (h_down + dist), w, h_up);
+    down_quad = new Quad(x, y, w, h_down);
 }
 
 Tube::~Tube()
@@ -34,6 +34,7 @@ Tube::~Tube()
 
 void Tube::Update(float dt)
 {
+    //TODO CHANGE VELOCITY
     pos_x = pos_x - (1.0f * dt);
 
     up_quad->Move(-(1.0f * dt), 0);

@@ -14,9 +14,10 @@ struct Vertex;
 class Character{
 
 public:
-    Character(float aspect_r, float rad, float pos_x, float pos_y, Circle* circ);
+    Character(float rad, float pos_x, float pos_y, Circle* circ);
     void ApplyForce();
     void Update(float dt);
+
     void MoveCharacter(float move_x, float move_y);
     ~Character();
 

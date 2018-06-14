@@ -10,9 +10,9 @@
 #include <time.h>
 #include <android/log.h>
 
+
 #define LOG_TAG "NativeLibrary"
 #define LOG_E(...)  __android_log_print(ANDROID_LOG_ERROR, LOG_TAG, __VA_ARGS__)
-
 
 ModuleRenderer::ModuleRenderer(Application *app) :
                         Module(app),
@@ -20,6 +20,7 @@ ModuleRenderer::ModuleRenderer(Application *app) :
                         program(0),
                         vertexBuff(0),
                         circleVBuff(0),
+                        vpAttrib(-1),
                         posAttrib(-1),
                         colorAttrib(-1)
 {}
@@ -31,6 +32,7 @@ bool ModuleRenderer::Init() {
     if (!program)
         return false;
 
+    vpAttrib = glGetAttribLocation(program, "viewport");
     posAttrib = glGetAttribLocation(program, "pos");
     colorAttrib = glGetAttribLocation(program, "color");
 
@@ -50,13 +52,7 @@ ModuleRenderer::~ModuleRenderer() {
 
 Circle* ModuleRenderer::CreateCircle(float radius, float x, float y)
 {
-
-    int scr_x, scr_y;
-
-    GetViewportSize(scr_x, scr_y);
-    float ar = (float)scr_x / (float)scr_y;
-
-    circle = new Circle(ar, radius, x, y);
+    circle = new Circle(radius, x, y);
 
     return circle;
 
@@ -88,7 +84,13 @@ void ModuleRenderer::Draw() {
 
     for(int i = 0; i < quads.size(); ++i)
     {
+
+        int screen_x, screen_y;
+        GetViewportSize(screen_x, screen_y);
+
         glBufferData(GL_ARRAY_BUFFER, sizeof(*quads[i]), &(*quads[i]).vertices[0], GL_STATIC_DRAW);
+        //TODO SEND VIEWPORT TO SHADER
+        //glVertexAttribPointer(vpAttrib, 2, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 4 * 4, (void*)(0));
         glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const GLvoid*)offsetof(Vertex, pos));
         glVertexAttribPointer(colorAttrib, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(Vertex), (const GLvoid*)offsetof(Vertex, rgba));
 
@@ -96,6 +98,7 @@ void ModuleRenderer::Draw() {
         glEnableVertexAttribArray(colorAttrib);
 
         glDrawArrays(GL_TRIANGLES, 0, 6);
+
     }
 
     glBindBuffer(GL_ARRAY_BUFFER, circleVBuff);
