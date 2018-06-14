@@ -1,7 +1,6 @@
 //
 // Created by Laura on 13/06/2018.
 //
-#include "Application.h"
 
 #include "Character.h"
 #include "Collider.h"

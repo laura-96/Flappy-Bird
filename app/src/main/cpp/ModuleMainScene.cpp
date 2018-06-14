@@ -4,6 +4,8 @@
 
 #include "ModuleMainScene.h"
 #include "Application.h"
+#include "ModuleRenderer.h"
+#include "ModuleCollision.h"
 
 #include <iostream>
 #include <cstdlib>
@@ -27,7 +29,7 @@ bool ModuleMainScene::Init() {
 
     App->module_renderer->GetViewportSize(screen_x, screen_y);
 
-    InstantiateTubes(screen_x);
+    InstantiateTubes(screen_x + (screen_x / 4));
 
     float char_size = screen_x / 9;
 
@@ -100,9 +102,12 @@ bool ModuleMainScene::Update() {
 
     }
 
-    if(tubes.back()->pos_x <= (screen_x + tubes.back()->width))
-        InstantiateTubes(tubes.back()->pos_x + (screen_x / 1.5f));
+    if((*tubes.back()).pos_x <= (screen_x + (*tubes.back()).width))
+        InstantiateTubes((*tubes.back()).pos_x + (screen_x / 1.5f));
 
+    if(ball->y < 0)
+        game_state = END;
+    
     return true;
 
 }
@@ -114,7 +119,7 @@ void ModuleMainScene::OnCollision(Collider *c1, Collider *c2) {
 void ModuleMainScene::InstantiateTubes(float pos_x)
 {
 
-    for (float sx = pos_x ; sx < (pos_x + screen_x); sx += (screen_x / 1.5f))// distance between tubes
+    for (float sx = pos_x ; sx < (pos_x + (2 * screen_x)); sx += (screen_x / 1.5f))// distance between tubes
     {
 
         std::random_device rnd;
@@ -158,7 +163,7 @@ void ModuleMainScene::RestartGame() {
 
     tubes.clear();
 
-    InstantiateTubes(screen_x);
+    InstantiateTubes(screen_x + (screen_x / 4));
 
     float char_size = screen_x / 9; //A quarter of the screen in x axis
 

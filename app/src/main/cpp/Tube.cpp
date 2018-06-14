@@ -34,12 +34,11 @@ Tube::~Tube()
 
 void Tube::Update(float dt)
 {
-    //TODO CHANGE VELOCITY
-    pos_x = pos_x - (150.0f * dt);
+    pos_x = pos_x - (650.0f * dt);
 
-    up_quad->Move(-(250.0f * dt), 0);
-    down_quad->Move(-(250.0f * dt), 0);
+    up_quad->Move(-(650.0f * dt), 0);
+    down_quad->Move(-(650.0f * dt), 0);
 
-    up_collider->Move(-(250.0f * dt), 0);
-    down_collider->Move(-(250.0f * dt), 0);
+    up_collider->Move(-(650.0f * dt), 0);
+    down_collider->Move(-(650.0f * dt), 0);
 }

@@ -9,6 +9,7 @@
 
 class Collider;
 class Quad;
+class Circle;
 struct Vertex;
 
 class Character{
@@ -24,7 +25,7 @@ public:
     float radius;
     float x, y;
     float velocity;
-    float gravity = -1300.0f;
+    float gravity = -2200.0f;
 
     Collider* collider;
     Circle* circle;

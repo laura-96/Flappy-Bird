@@ -11,11 +11,12 @@
 #include <string.h>
 #include <time.h>
 
-#include "Module.h"
-#include "ModuleCollision.h"
-#include "ModuleRenderer.h"
-#include "ModuleMainScene.h"
+class Module;
+class ModuleCollision;
+class ModuleRenderer;
+class ModuleMainScene;
 
+class Collider;
 
 class Application {
 

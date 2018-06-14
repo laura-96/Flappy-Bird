@@ -7,9 +7,9 @@
 
 enum CollisionType
 {
+	NONE,
     CIRCLE,
-    TUBE,
-    NONE
+    TUBE
 };
 
 class Collider

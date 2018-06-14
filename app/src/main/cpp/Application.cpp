@@ -5,6 +5,11 @@
 
 #include "Application.h"
 
+#include "Module.h"
+#include "ModuleCollision.h"
+#include "ModuleRenderer.h"
+#include "ModuleMainScene.h"
+#include "Collider.h"
 
 Application::Application() {
 
