@@ -101,7 +101,7 @@ bool ModuleMainScene::Update() {
     }
 
     if(tubes.back()->pos_x <= (screen_x + tubes.back()->width))
-        InstantiateTubes(tubes.back()->pos_x + DISTANCE_TUBES);
+        InstantiateTubes(tubes.back()->pos_x + (screen_x / 4));
 
     return true;
 
@@ -114,7 +114,7 @@ void ModuleMainScene::OnCollision(Collider *c1, Collider *c2) {
 void ModuleMainScene::InstantiateTubes(float pos_x)
 {
 
-    for (float sx = pos_x ; sx < (pos_x + screen_x); sx += DISTANCE_TUBES)// distance between tubes
+    for (float sx = pos_x ; sx < (pos_x + screen_x); sx += (screen_x / 4))// distance between tubes
     {
 
         std::random_device rnd;
@@ -186,4 +186,5 @@ bool ModuleMainScene::CleanUp() {
     }
 
     tubes.clear();
+    return true;
 }

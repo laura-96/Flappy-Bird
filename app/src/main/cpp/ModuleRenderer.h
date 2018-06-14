@@ -18,13 +18,15 @@ class Circle;
 
 static const char vertex[] =
         "#version 100\n"
+                "#define GET_POS(p,vp) ((float(p)*2.0/float(vp))-1.0)\n"
                 "attribute vec2 pos;\n"
-                "attribute vec2 viewport;\n"
                 "attribute vec4 color;\n"
                 "varying vec4 vColor;\n"
+                "uniform vec2 viewport;\n"
+
                 "void main() {\n"
-                "    vec2 final_pos = vec2((pos.x * 2 / viewport.x) - 1, (pos.y * 2 / viewport.y) - 1);"
-                "    gl_Position = vec4(final_pos, 0.0, 1.0);\n"
+                "    vec2 new_pos = vec2(GET_POS(pos.x, viewport.x), GET_POS(pos.y, viewport.y));\n"
+                "    gl_Position = vec4(new_pos, 0.0, 1.0);\n"
                 "    vColor = color;\n"
                 "}\n";
 
@@ -67,6 +69,8 @@ private:
     GLint vpAttrib;
     GLint posAttrib;
     GLint colorAttrib;
+
+    float viewport[2];
 
     std::vector<Quad*> quads;
     Circle* circle;

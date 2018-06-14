@@ -27,14 +27,21 @@ ModuleRenderer::ModuleRenderer(Application *app) :
 
 
 bool ModuleRenderer::Init() {
+
+    int sx, sy;
+    GetViewportSize(sx, sy);
+
+    viewport[0] = (float)sx;
+    viewport[1] = (float)sy;
+
     program = createProgram(vertex, fragment);
 
     if (!program)
         return false;
 
-    vpAttrib = glGetAttribLocation(program, "viewport");
     posAttrib = glGetAttribLocation(program, "pos");
     colorAttrib = glGetAttribLocation(program, "color");
+    vpAttrib = glGetUniformLocation(program, "viewport");
 
     glGenBuffers(1, &vertexBuff);
     glGenBuffers(1, &circleVBuff);
@@ -85,14 +92,12 @@ void ModuleRenderer::Draw() {
     for(int i = 0; i < quads.size(); ++i)
     {
 
-        int screen_x, screen_y;
-        GetViewportSize(screen_x, screen_y);
-
         glBufferData(GL_ARRAY_BUFFER, sizeof(*quads[i]), &(*quads[i]).vertices[0], GL_STATIC_DRAW);
-        //TODO SEND VIEWPORT TO SHADER
-        //glVertexAttribPointer(vpAttrib, 2, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 4 * 4, (void*)(0));
+
         glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const GLvoid*)offsetof(Vertex, pos));
         glVertexAttribPointer(colorAttrib, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(Vertex), (const GLvoid*)offsetof(Vertex, rgba));
+
+        glUniform2fv(vpAttrib, 2, viewport);
 
         glEnableVertexAttribArray(posAttrib);
         glEnableVertexAttribArray(colorAttrib);
@@ -106,6 +111,8 @@ void ModuleRenderer::Draw() {
     glBufferData(GL_ARRAY_BUFFER, sizeof(*circle), &(*circle).vertices[0], GL_STATIC_DRAW);
     glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const GLvoid*)offsetof(Vertex, pos));
     glVertexAttribPointer(colorAttrib, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(Vertex), (const GLvoid*)offsetof(Vertex, rgba));
+
+    glUniform2fv(vpAttrib, 2, viewport);
 
     glEnableVertexAttribArray(posAttrib);
     glEnableVertexAttribArray(colorAttrib);
@@ -210,6 +217,8 @@ bool ModuleRenderer::Update() {
 bool ModuleRenderer::CleanUp() {
     quads.clear();
     circle = nullptr;
+
+    return true;
 }
 
 void ModuleRenderer::Render() {
