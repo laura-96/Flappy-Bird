@@ -97,11 +97,10 @@ void ModuleRenderer::Draw() {
         glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const GLvoid*)offsetof(Vertex, pos));
         glVertexAttribPointer(colorAttrib, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(Vertex), (const GLvoid*)offsetof(Vertex, rgba));
 
-        glUniform2fv(vpAttrib, 2, viewport);
-
         glEnableVertexAttribArray(posAttrib);
         glEnableVertexAttribArray(colorAttrib);
 
+        glUniform2fv(vpAttrib, 1, viewport);
         glDrawArrays(GL_TRIANGLES, 0, 6);
 
     }
@@ -112,11 +111,11 @@ void ModuleRenderer::Draw() {
     glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const GLvoid*)offsetof(Vertex, pos));
     glVertexAttribPointer(colorAttrib, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(Vertex), (const GLvoid*)offsetof(Vertex, rgba));
 
-    glUniform2fv(vpAttrib, 2, viewport);
 
     glEnableVertexAttribArray(posAttrib);
     glEnableVertexAttribArray(colorAttrib);
 
+    glUniform2fv(vpAttrib, 1, viewport);
     glDrawArrays(GL_TRIANGLE_FAN, 0, 20);
 
 }
