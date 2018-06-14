@@ -5,7 +5,7 @@
 
 #include "Character.h"
 #include "Collider.h"
-#include "Quad.h"
+#include "Shapes.h"
 
 Character::Character(float aspect_r, float rad, float pos_x, float pos_y, Circle* circ)
 {

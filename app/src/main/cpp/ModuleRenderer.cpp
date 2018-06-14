@@ -4,6 +4,7 @@
 
 #include "ModuleRenderer.h"
 
+#include "Shapes.h"
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>

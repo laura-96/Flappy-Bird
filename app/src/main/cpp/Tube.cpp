@@ -4,7 +4,7 @@
 
 #include "Tube.h"
 #include "Collider.h"
-#include "Quad.h"
+#include "Shapes.h"
 
 Tube::Tube(float d, float x, float y, float w, float h) {
     dist = d;

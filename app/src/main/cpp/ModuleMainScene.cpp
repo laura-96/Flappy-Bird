@@ -10,7 +10,7 @@
 #include <random>
 
 #include "Collider.h"
-#include "Quad.h"
+#include "Shapes.h"
 #include "Tube.h"
 #include "Character.h"
 

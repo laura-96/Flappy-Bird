@@ -7,13 +7,14 @@
 
 #include "Module.h"
 
-#include "Quad.h"
 #include <math.h>
 #include <vector>
 
 #include <EGL/egl.h>
 #include <GLES2/gl2.h>
 
+class Quad;
+class Circle;
 
 static const char vertex[] =
         "#version 100\n"
