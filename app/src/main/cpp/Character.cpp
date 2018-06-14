@@ -29,7 +29,7 @@ Character::~Character() {
 
 void Character::ApplyForce()
 {
-    velocity = 100.0f;
+    velocity = 500.0f;
 }
 
 void Character::Update(float dt)
@@ -38,8 +38,6 @@ void Character::Update(float dt)
     float to_move = velocity * dt + (0.5f * gravity * dt * dt);
     y += to_move;
     velocity += (gravity * dt);
-
-    //velocity = fmax(-0.005f, velocity);
 
     MoveCharacter(0, to_move);
 }
