@@ -29,7 +29,7 @@ Character::~Character() {
 
 void Character::ApplyForce()
 {
-    velocity = 500.0f;
+    velocity = 970.0f;
 }
 
 void Character::Update(float dt)
