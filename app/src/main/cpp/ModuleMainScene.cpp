@@ -31,7 +31,7 @@ bool ModuleMainScene::Init() {
 
     InstantiateTubes(screen_x + (screen_x / 4));
 
-    float char_size = screen_x / 9;
+    float char_size = screen_x / 10;
 
     //Instantiate in the middle of the screen
     float screen_pos_x = screen_x / 2;
@@ -165,7 +165,7 @@ void ModuleMainScene::RestartGame() {
 
     InstantiateTubes(screen_x + (screen_x / 4));
 
-    float char_size = screen_x / 9; //A quarter of the screen in x axis
+    float char_size = screen_x / 10;
 
     //Instantiate in the middle of the screen
     float screen_pos_x = screen_x / 2;
